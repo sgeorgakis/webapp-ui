@@ -1,0 +1,14 @@
+<table class="fileData" style="width:100%">
+  <tr>
+    <th>id</th>
+    <th>title</th>
+    <th>description</th>
+    <th>creation date</th>
+  </tr>
+  <tr *ngFor="let fileData of fileDatas">
+    <td>{{ fileData.id }}</td>
+    <td>{{ fileData.title }}</td>
+    <td>{{  fileData.description  }}</td>
+    <td>{{  fileData.creationDate | date:'medium'  }}</td>
+  </tr>
+</table>

@@ -1,0 +1,17 @@
+.fileData tr:hover {
+  color: #607D8B;
+  background-color: #DDD;
+  left: .1em;
+}
+
+.fileData td, th {
+  width: 4rem;
+  height: 2rem;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+.fileData th {
+  background: lightblue;
+  border-color: white;
+}
