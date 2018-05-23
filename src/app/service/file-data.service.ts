@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpRequest, HttpEvent, HttpHeaders } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 
 import { FileData } from '../model/file-data';
@@ -11,19 +11,37 @@ import { MessageService } from './message.service';
 })
 export class FileDataService {
 
-  private fileDataUrl = 'api/files';  // URL to web api
-  private uploadUrl = this.fileDataUrl + '/upload';
+  private fileDataUrl = '//localhost:8080/api/fileDatas';  // URL to web api
+  private uploadUrl = '//localhost:8080/api/fileDatas/upload';
 
   constructor(
       private http: HttpClient,
       private messageService: MessageService
    ) { }
 
-  getFileDatas(): Observable<FileData[]> {
+  getFileDatas(): Observable<any> {
     return this.http.get<FileData[]>(this.fileDataUrl)
       .pipe(
-          catchError(this.handleError('getHeroes', []))
+          catchError(this.handleError('getFileDatas', []))
       );
+  }
+
+  upload(file: File, title: string, description: string): any {
+    const formData: FormData = new FormData();
+
+    formData.append('file', file);
+    formData.append('title', title);
+    formData.append('description', description);
+
+    const headers = new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'});
+
+    return this.http.post<any>(this.uploadUrl, formData, {headers: headers})
+      .subscribe(data => {
+        console.log(data);
+      });
+//      .pipe(
+//          catchError(this.handleError('uploadFileData', []))
+//      );
   }
 
   /**
@@ -35,7 +53,7 @@ export class FileDataService {
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
-      console.error(error); // log to console instead
+      // console.error(error); // log to console instead
 
       this.messageService.displayMessage('error', error);
 
