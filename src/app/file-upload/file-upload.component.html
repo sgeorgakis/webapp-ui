@@ -1,14 +1,20 @@
 <div align="center">
-  <form (ngSubmit)="onSubmit()">
-    <span>Title: </span>
-    <input type="text" (change)="selectTitle($event)"/>
+  <div>
+    <span class="input-field">
+      <span>Title: </span>
+        <input type="text" (change)="selectTitle($event)"/>
+    </span>
 
-    <span>Description: </span>
-    <input type="text" (change)="selectDescription($event)"/>
+    <span class="input-field">
+      <span>Description: </span>
+      <input type="text" (change)="selectDescription($event)"/>
+    </span>
 
-    <span>File: </span>
-    <input type="file" (change)="selectFile($event)"/>
+    <span class="input-field">
+      <span>File: </span>
+      <input type="file" (change)="selectFile($event)"/>
+    </span>
 
-	<button [disabled]="!file" (click)="submit()">Save</button>
-   </form>
+	 <button [disabled]="!file" (click)="submit()">Save</button>
+  </div>
 </div>

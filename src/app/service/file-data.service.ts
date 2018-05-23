@@ -6,13 +6,13 @@ import { catchError } from 'rxjs/operators';
 import { FileData } from '../model/file-data';
 import { MessageService } from './message.service';
 
+const fileDataUrl = '//localhost:8080/api/fileDatas';
+const uploadUrl = fileDataUrl + '/upload';
+
 @Injectable({
   providedIn: 'root',
 })
 export class FileDataService {
-
-  private fileDataUrl = '//localhost:8080/api/fileDatas';  // URL to web api
-  private uploadUrl = '//localhost:8080/api/fileDatas/upload';
 
   constructor(
       private http: HttpClient,
@@ -20,9 +20,9 @@ export class FileDataService {
    ) { }
 
   getFileDatas(): Observable<any> {
-    return this.http.get<FileData[]>(this.fileDataUrl)
+    return this.http.get<FileData[]>(fileDataUrl)
       .pipe(
-          catchError(this.handleError('getFileDatas', []))
+        catchError(this.handleError('getFileData', []))
       );
   }
 
@@ -33,15 +33,16 @@ export class FileDataService {
     formData.append('title', title);
     formData.append('description', description);
 
-    const headers = new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'});
-
-    return this.http.post<any>(this.uploadUrl, formData, {headers: headers})
-      .subscribe(data => {
-        console.log(data);
-      });
-//      .pipe(
-//          catchError(this.handleError('uploadFileData', []))
-//      );
+    return this.http.post<any>(uploadUrl, formData)
+      .subscribe(
+        result => {
+          let message = 'File with id ' + result.id + ' was uploaded';
+          this.messageService.displayMessage('success', message);
+        }, error => {
+          this.messageService.displayMessage('error', error.error.message);
+        }, () => {
+          // On complete
+        });
   }
 
   /**
@@ -53,9 +54,7 @@ export class FileDataService {
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
-      // console.error(error); // log to console instead
-
-      this.messageService.displayMessage('error', error);
+      this.messageService.displayMessage('error', error.message);
 
       // Let the app keep running by returning an empty result.
        return of(result as T);

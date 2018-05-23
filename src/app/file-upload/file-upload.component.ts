@@ -12,7 +12,7 @@ export class FileUploadComponent implements OnInit {
 
   title: string;
   description: string;
-  file: FileList;
+  file: File;
 
   constructor(private fileDataService: FileDataService) { }
 
@@ -20,7 +20,7 @@ export class FileUploadComponent implements OnInit {
   }
 
   selectFile(event) {
-    this.file = event.target.files;
+    this.file = event.target.files.item(0);
   }
 
   selectTitle(event) {
@@ -28,11 +28,11 @@ export class FileUploadComponent implements OnInit {
   }
 
   selectDescription(event) {
-    this.description = event.target.description;
+    this.description = event.target.value;
   }
 
   submit() {
-    this.fileDataService.upload(this.file.item(0), this.title, this.description);
+    this.fileDataService.upload(this.file, this.title, this.description);
     this.file = undefined;
     this.title = undefined;
     this.description = undefined;

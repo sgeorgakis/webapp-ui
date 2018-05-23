@@ -1,0 +1,6 @@
+<div *ngIf="messageService.message">
+  <div class="message {{messageService.message.type}}">
+    <span class="closebtn" (click)="clear()">&times;</span>
+    {{messageService.message.description}}
+  </div>
+</div>
