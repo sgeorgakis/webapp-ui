@@ -2,19 +2,19 @@
   <div>
     <span class="input-field">
       <span>Title: </span>
-        <input type="text" (change)="selectTitle($event)"/>
+        <input type="text" [(ngModel)]="title"/>
     </span>
 
     <span class="input-field">
       <span>Description: </span>
-      <input type="text" (change)="selectDescription($event)"/>
+      <input type="text" [(ngModel)]="description"/>
     </span>
 
     <span class="input-field">
       <span>File: </span>
-      <input type="file" (change)="selectFile($event)"/>
+      <input type="file" (change)="selectFile($event)" [(ngModel)]="fileInput"/>
     </span>
 
-	 <button [disabled]="!file" (click)="submit()">Save</button>
+	 <button [disabled]="isDisabled()" (click)="submit()">Save</button>
   </div>
 </div>

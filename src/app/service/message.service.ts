@@ -11,7 +11,7 @@ export class MessageService {
   constructor() { }
 
   displayMessage(type: string, description: string) {
-    if (type == 'error') {
+    if (type === 'error') {
       console.error(description);
     } else {
       console.info(description);

@@ -14,6 +14,10 @@ export class MessageComponent implements OnInit {
   ngOnInit() {
   }
 
+  /**
+   * If the user presses the close button,
+   * discard the message.
+   */
   clear() {
     this.messageService.clear();
   }

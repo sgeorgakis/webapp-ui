@@ -1,11 +1,11 @@
-<table class="fileData" style="width:100%" [hidden]="!isVisible">
+<table class="fileData" style="width:100%" [hidden]="!shouldBeVisible()">
   <tr>
     <th>id</th>
     <th>title</th>
     <th>description</th>
     <th>creation date</th>
   </tr>
-  <tr *ngFor="let fileData of fileDatas">
+  <tr *ngFor="let fileData of fileDataService.fileDatas">
     <td>{{ fileData.id }}</td>
     <td>{{ fileData.title }}</td>
     <td>{{  fileData.description  }}</td>

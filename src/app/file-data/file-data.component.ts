@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FileData } from '../model/file-data';
 import { FileDataService } from '../service/file-data.service';
 
 @Component({
@@ -9,43 +8,26 @@ import { FileDataService } from '../service/file-data.service';
 })
 export class FileDataComponent implements OnInit {
 
-    isVisible: boolean;
-    fileDatas: FileData[];
-
     constructor(private fileDataService: FileDataService) {
     }
 
     ngOnInit() {
       this.getFileDatas();
-      this.isVisible = false;
     }
 
+    /**
+     * Get the already saved fileDatas 
+     */
     getFileDatas(): void {
-      this.fileDataService.getFileDatas()
-      .subscribe(fileDatas => {
-        this.fileDatas = fileDatas;
-        this.fileDatas = this.sort(fileDatas);
-        this.isVisible = this.fileDatas.length > 0;
-      });
+      this.fileDataService.getFileDatas();
     }
 
-    shouldBeVisible() {
-      this.isVisible = this.fileDatas != null && this.fileDatas.length > 0;
-      console.info(this.fileDatas == null);
-      console.info(this.isVisible);
-    }
-
-    sort(fileDatas: FileData[]) {
-      fileDatas.sort((a, b) => {
-        if (a.creationDate > b.creationDate) {
-          return -1;
-        } else if (a.creationDate < b.creationDate) {
-          return 1;
-        } else {
-          return 0;
-        }
-      });
-      return fileDatas;
+    /**
+     * Check if there are fileDatas to show.
+     * If not, do not show the table.
+     */
+    shouldBeVisible(): boolean {
+      return this.fileDataService.fileDatas != null && this.fileDataService.fileDatas.length > 0;
     }
 
 }
