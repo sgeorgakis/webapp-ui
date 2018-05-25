@@ -5,7 +5,7 @@
     <th>description</th>
     <th>creation date</th>
   </tr>
-  <tr *ngFor="let fileData of fileDataService.fileDatas">
+  <tr *ngFor="let fileData of fileDataService.fileDataList">
     <td>{{ fileData.id }}</td>
     <td>{{ fileData.title }}</td>
     <td>{{  fileData.description  }}</td>

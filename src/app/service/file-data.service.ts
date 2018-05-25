@@ -6,7 +6,7 @@ import { catchError } from 'rxjs/operators';
 import { FileData } from '../model/file-data';
 import { MessageService } from './message.service';
 
-const fileDataUrl = '//localhost:8080/api/fileDatas';
+const fileDataUrl = '//localhost:8080/api/file-data';
 const uploadUrl = fileDataUrl + '/upload';
 
 @Injectable({
@@ -14,7 +14,7 @@ const uploadUrl = fileDataUrl + '/upload';
 })
 export class FileDataService {
 
-  fileDatas: FileData[];
+  fileDataList: FileData[];
 
   constructor(
       private http: HttpClient,
@@ -22,15 +22,15 @@ export class FileDataService {
    ) { }
 
   /**
-   * Get the fileDatas from the server.
+   * Get the fileDataList from the server.
    * If an error occurs, display it
    * using the message service.
    */
-  getFileDatas(): void {
+  getFileDataList(): void {
     this.http.get<FileData[]>(fileDataUrl)
        .subscribe(
          result => {
-           this.fileDatas = this.sortByDateDesc(result);
+           this.fileDataList = this.sortByDateDesc(result);
         }, error => {
           this.messageService.displayMessage('error', error.error.message);
         }, () => {
@@ -59,8 +59,8 @@ export class FileDataService {
         result => {
           const message = 'File with id ' + result.id + ' was uploaded';
           this.messageService.displayMessage('success', message);
-          this.fileDatas.push(result);
-          this.fileDatas = this.sortByDateDesc(this.fileDatas);
+          this.fileDataList.push(result);
+          this.fileDataList = this.sortByDateDesc(this.fileDataList);
         }, error => {
           this.messageService.displayMessage('error', error.error.message);
         }, () => {
@@ -72,10 +72,10 @@ export class FileDataService {
    * Sort a fileData array by creationDate descending.
    * A custom pipe may be able to be used instead.
    *
-   * @param fileDatas the fileData array to sort
+   * @param fileDataList the fileData array to sort
    */
-  sortByDateDesc(fileDatas: FileData[]) {
-    fileDatas.sort((a, b) => {
+  sortByDateDesc(fileDataList: FileData[]) {
+    fileDataList.sort((a, b) => {
       if (a.creationDate > b.creationDate) {
         return -1;
       } else if (a.creationDate < b.creationDate) {
@@ -84,7 +84,7 @@ export class FileDataService {
         return 0;
       }
     });
-    return fileDatas;
+    return fileDataList;
   }
 
 }

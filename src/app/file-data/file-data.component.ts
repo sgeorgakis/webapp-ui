@@ -12,22 +12,22 @@ export class FileDataComponent implements OnInit {
     }
 
     ngOnInit() {
-      this.getFileDatas();
+      this.getFileDataList();
     }
 
     /**
-     * Get the already saved fileDatas 
+     * Get the already saved fileDataList
      */
-    getFileDatas(): void {
-      this.fileDataService.getFileDatas();
+    getFileDataList(): void {
+      this.fileDataService.getFileDataList();
     }
 
     /**
-     * Check if there are fileDatas to show.
+     * Check if there are fileData to show.
      * If not, do not show the table.
      */
     shouldBeVisible(): boolean {
-      return this.fileDataService.fileDatas != null && this.fileDataService.fileDatas.length > 0;
+      return this.fileDataService.fileDataList != null && this.fileDataService.fileDataList.length > 0;
     }
 
 }
