@@ -1,3 +1,16 @@
+.upload-component {
+  border: solid;
+  border-radius: 25px;
+  border-color: #369;
+  width: 80%;
+  height: 150px;
+  margin: 30px auto;
+}
+
+.upload-component .inner {
+  margin: 50px;
+}
+
 .input-field {
   margin-right: 15px;
 }
