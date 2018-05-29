@@ -32,9 +32,7 @@ export class FileDataService {
          result => {
            this.fileDataList = this.sortByDateDesc(result);
         }, error => {
-          this.messageService.displayMessage('error', error.error.message);
-        }, () => {
-          // On complete
+           this.handleError(error);
         });
   }
 
@@ -62,10 +60,22 @@ export class FileDataService {
           this.fileDataList.push(result);
           this.fileDataList = this.sortByDateDesc(this.fileDataList);
         }, error => {
-          this.messageService.displayMessage('error', error.error.message);
-        }, () => {
-          // On complete
+          this.handleError(error);
         });
+  }
+
+  /**
+   * Handles the error response from server
+   * and displays the appropriate message to the user
+   *
+   * @param error the error response
+   */
+  handleError(error) {
+    if (error.status === 0) {
+      this.messageService.displayMessage('error', 'Server is unreachable');
+    } else {
+      this.messageService.displayMessage('error', error.error.message);
+    }
   }
 
   /**
