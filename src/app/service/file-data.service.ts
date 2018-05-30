@@ -6,8 +6,9 @@ import { catchError } from 'rxjs/operators';
 import { FileData } from '../model/file-data';
 import { MessageService } from './message.service';
 
-const fileDataUrl = '//localhost:8080/api/file-data';
-const uploadUrl = fileDataUrl + '/upload';
+import { FILE_DATA_URL, UPLOAD_URL } from '../../assets/constants';
+import { SUCCESSFUL_UPLOAD_MESSAGE, SERVER_UNREACHABLE_MESSAGE } from '../../assets/constants';
+import { SUCCESSFUL_MESSAGE_TYPE, ERROR_MESSAGE_TYPE } from '../../assets/constants';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +28,7 @@ export class FileDataService {
    * using the message service.
    */
   getFileDataList(): void {
-    this.http.get<FileData[]>(fileDataUrl)
+    this.http.get<FileData[]>(FILE_DATA_URL)
        .subscribe(
          result => {
            this.fileDataList = this.sortByDateDesc(result);
@@ -52,11 +53,10 @@ export class FileDataService {
     formData.append('title', title);
     formData.append('description', description);
 
-    this.http.post<FileData>(uploadUrl, formData)
+    this.http.post<FileData>(UPLOAD_URL, formData)
       .subscribe(
         result => {
-          const message = 'File with id ' + result.id + ' was uploaded';
-          this.messageService.displayMessage('success', message);
+          this.messageService.displayMessage(SUCCESSFUL_MESSAGE_TYPE, SUCCESSFUL_UPLOAD_MESSAGE + result.id);
           this.fileDataList.push(result);
           this.fileDataList = this.sortByDateDesc(this.fileDataList);
         }, error => {
@@ -72,9 +72,9 @@ export class FileDataService {
    */
   handleError(error) {
     if (error.status === 0) {
-      this.messageService.displayMessage('error', 'Server is unreachable');
+      this.messageService.displayMessage(ERROR_MESSAGE_TYPE, SERVER_UNREACHABLE_MESSAGE);
     } else {
-      this.messageService.displayMessage('error', error.error.message);
+      this.messageService.displayMessage(ERROR_MESSAGE_TYPE, error.error.message);
     }
   }
 

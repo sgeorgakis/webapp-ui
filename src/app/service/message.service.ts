@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Message } from '../model/message';
 
+import { ERROR_MESSAGE_TYPE } from '../../assets/constants';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -11,7 +13,7 @@ export class MessageService {
   constructor() { }
 
   displayMessage(type: string, description: string) {
-    if (type === 'error') {
+    if (type === ERROR_MESSAGE_TYPE) {
       console.error(description);
     } else {
       console.info(description);
